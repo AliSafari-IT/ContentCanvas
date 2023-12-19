@@ -25,7 +25,7 @@ ContentCanvas is a full-stack web application designed as a creative space for d
 ### Setting Up the Project
 1. **Clone the Repository**
    ```
-   git clone [repository-url]
+   git clone https://github.com/AliSafari-IT/ContentCanvas.git
    ```
 
 2. **Set Up the Backend**
@@ -54,7 +54,3 @@ We welcome contributions to ContentCanvas. Please follow these steps to contribu
 
 ## License
 This project is licensed under the [MIT License](LICENSE.md).
-
----
-
-Remember to replace `[repository-url]` with your project's repository URL and modify any specific details as per your project setup. This README provides a general guide and should be tailored to fit the specifics of ContentCanvas.
