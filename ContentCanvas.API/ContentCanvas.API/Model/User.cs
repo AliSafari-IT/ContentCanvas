@@ -8,18 +8,18 @@ namespace ContentCanvas.API.Model
         // This property represents the MongoDB ObjectId.
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id { get; set; }
+        public string Id { get; set; }  // MongoDB ObjectId
 
-        // Other properties as before
+        // Other properties
         [BsonRequired]
-        public required string Username { get; set; }
-
-        [BsonRequired]
-        public required string Email { get; set; }
+        public string Username { get; set; }
 
         [BsonRequired]
-        public required string Password { get; set; }
+        public string Email { get; set; }
 
-        public string? Role { get; set; }
+        [BsonRequired]
+        public string Password { get; set; }
+
+        public string? Role { get; set; }  // Nullable property for user role
     }
 }
