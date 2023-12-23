@@ -10,7 +10,7 @@ namespace ContentCanvas.API.Data
         public MongoDbContext(IConfiguration configuration)
         {
             var client = new MongoClient(configuration.GetConnectionString("MongoDb"));
-            _database = client.GetDatabase(configuration["MongoDbName"]);
+            _database = client.GetDatabase("ContentCanvasDB");
         }
 
         public IMongoCollection<User> Users => _database.GetCollection<User>("Users");
