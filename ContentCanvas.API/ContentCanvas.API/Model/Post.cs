@@ -7,15 +7,16 @@ namespace ContentCanvas.API.Model
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public required string Id { get; set; }
+        public string Id { get; set; } // MongoDB ObjectId
 
         [BsonRequired]
-        public required string Title { get; set; }
+        public string Title { get; set; }
 
         public string? Content { get; set; }
 
         public bool IsPublic { get; set; }
 
-        public required string UserId { get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string UserId { get; set; } // Assuming this is a reference to a User document
     }
 }
