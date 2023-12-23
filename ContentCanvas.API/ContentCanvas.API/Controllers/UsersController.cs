@@ -5,13 +5,11 @@ using MongoDB.Driver;
 
 namespace ContentCanvas.API.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UsersController(MongoDbContext context) : Controller
     {
         private readonly MongoDbContext _context = context;
-        public IActionResult Index()
-        {
-            return View();
-        }
 
         // GET: api/Users
         [HttpGet]
@@ -23,9 +21,9 @@ namespace ContentCanvas.API.Controllers
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public ActionResult<User> GetUser(string id)
+        public async Task<ActionResult<User>> GetUser(string id)
         {
-            var user = _context.Users.Find(user => user.Id == id).FirstOrDefault();
+            var user = await _context.Users.Find(user => user.Id == id).FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -37,23 +35,28 @@ namespace ContentCanvas.API.Controllers
 
         // POST: api/Users
         [HttpPost]
-        public ActionResult<User> PostUser(User user)
+        public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Users.InsertOne(user);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            await _context.Users.InsertOneAsync(user);
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
         }
 
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public IActionResult PutUser(string id, User user)
+        public async Task<IActionResult> PutUser(string id, User user)
         {
             if (id != user.Id)
             {
                 return BadRequest();
             }
 
-            var result = _context.Users.ReplaceOne(u => u.Id == id, user);
+            var result = await _context.Users.ReplaceOneAsync(u => u.Id == id, user);
 
             if (result.MatchedCount == 0)
             {
@@ -63,11 +66,12 @@ namespace ContentCanvas.API.Controllers
             return NoContent();
         }
 
+
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public ActionResult<User> DeleteUser(string id)
+        public async Task<IActionResult> DeleteUser(string id)
         {
-            var result = _context.Users.DeleteOne(user => user.Id == id);
+            var result = await _context.Users.DeleteOneAsync(user => user.Id == id);
 
             if (result.DeletedCount == 0)
             {
