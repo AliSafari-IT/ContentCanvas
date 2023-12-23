@@ -1,20 +1,18 @@
 ﻿using ContentCanvas.API.Data;
 using ContentCanvas.API.Model;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace ContentCanvas.API.Controllers
-{
-    [Route("api/[controller]")]
+{   
     [ApiController]
-    public class PostsController : ControllerBase
-    {
-        private readonly MongoDbContext _context;
+    [Route("[controller]")]
 
-        public PostsController(MongoDbContext context)
-        {
-            _context = context;
-        }
+
+    public class PostsController(MongoDbContext context) : Controller
+    {
+        private readonly MongoDbContext _context = context;
 
         // GET: api/Posts
         [HttpGet]
@@ -41,16 +39,16 @@ namespace ContentCanvas.API.Controllers
         [HttpPost]
         public ActionResult<Post> PostPost(Post post)
         {
-            if (!ModelState.IsValid)
+            // If Id is provided, validate if it's in the correct format
+            if (!string.IsNullOrEmpty(post.Id) && !ObjectId.TryParse(post.Id, out _))
             {
-                return BadRequest(ModelState);
+                return BadRequest("Invalid ObjectId format.");
             }
-
-            // Optional: Validate UserId here if necessary
 
             _context.Posts.InsertOne(post);
             return CreatedAtAction(nameof(GetPost), new { id = post.Id }, post);
         }
+
 
         // PUT: api/Posts/5
         [HttpPut("{id}")]
@@ -84,5 +82,7 @@ namespace ContentCanvas.API.Controllers
 
             return NoContent();
         }
+
+
     }
 }
