@@ -1,17 +1,35 @@
 using ContentCanvas.API.Data;
+using Microsoft.Extensions.DependencyInjection; // Make sure to include this
+using System.IO;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = WebApplication.CreateBuilder(new WebApplicationOptions
+{
+    Args = args,
+    // Set the application URLs
+    ApplicationName = typeof(Program).Assembly.FullName,
+    WebRootPath = "wwwroot",
+    ContentRootPath = Directory.GetCurrentDirectory(),
+    EnvironmentName = Environments.Development
+});
 
-// Add services to the container.
+// Set URLs for Kestrel
+builder.WebHost.UseUrls("https://localhost:5001", "http://localhost:5000");
 
+// Add services to the container
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddSingleton<MongoDbContext>();
+
+// Add MongoDbContext with IConfiguration
+builder.Services.AddSingleton<MongoDbContext>(sp =>
+    new MongoDbContext(sp.GetRequiredService<IConfiguration>()));
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
