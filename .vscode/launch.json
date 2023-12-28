@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Both",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/content-canvas-app/src/",
+            "outFiles": [
+                "${workspaceFolder}/content-canvas-app/**/*.js"
+            ],
+            "preLaunchTask": "Run Both",
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bServer running at\\b.*\\b(http://\\S+:\\d+)\\b",
+                "uriFormat": "%s"
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Open Chrome",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/content-canvas-app/src/",
+            "outFiles": [
+                "${workspaceFolder}/content-canvas-app/**/*.js"
+            ],
+            "preLaunchTask": "Run Both and Open Chrome",
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bServer running at\\b.*\\b(http://\\S+:\\d+)\\b",
+                "uriFormat": "%s"
+            }
+        }
+    ]
+}
