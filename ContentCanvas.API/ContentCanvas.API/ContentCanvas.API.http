@@ -1,6 +1,0 @@
-@ContentCanvas.API_HostAddress = http://localhost:5286
-
-GET {{ContentCanvas.API_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
