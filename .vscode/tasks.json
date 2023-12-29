@@ -1,0 +1,93 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Update and Run API",
+            "type": "shell",
+            "command": "git pull && yarn install && dotnet run",
+            "options": {
+                "cwd": "${workspaceFolder}/ContentCanvas.API"
+            },
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [
+                {
+                    "owner": "dotnet",
+                    "pattern": {
+                        "regexp": "^.+$",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "^.*Application started.*$",
+                        "endsPattern": "^.*Application stopping.*$"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Update and Run React App",
+            "type": "shell",
+            "command": "git pull && yarn install && yarn start",
+            "options": {
+                "cwd": "${workspaceFolder}/content-canvas-app"
+            },
+            "isBackground": true,
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "problemMatcher": [
+                {
+                    "owner": "javascript",
+                    "pattern": {
+                        "regexp": "^.+$",
+                        "file": 1,
+                        "location": 2,
+                        "message": 3
+                    },
+                    "background": {
+                        "activeOnStart": true,
+                        "beginsPattern": "^.*Starting development server.*$",
+                        "endsPattern": "^.*Compiled successfully.*$"
+                    }
+                }
+            ]
+        },
+        {
+            "label": "Run Both",
+            "dependsOn": ["Update and Run API", "Update and Run React App"],
+            "dependsOrder": "parallel"
+        },
+        {
+            "label": "Open Chrome",
+            "type": "shell",
+            "command": "start chrome http://localhost:3000 && exit",
+            "windows": {
+                "command": "powershell -Command \"Start-Process chrome http://localhost:3000; exit\""
+            },
+            "linux": {
+                "command": "google-chrome http://localhost:3000"
+            },
+            "osx": {
+                "command": "open -a 'Google Chrome' http://localhost:3000"
+            },
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared",
+                "focus": false
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Run Both and Open Chrome",
+            "dependsOn": ["Run Both", "Open Chrome"],
+            "dependsOrder": "parallel"
+        }
+    ]
+}
