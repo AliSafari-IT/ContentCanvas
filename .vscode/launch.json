@@ -8,6 +8,13 @@
             "request": "launch",
             "type": "node-terminal"
         },
+        {
+            "command": "yarn build",
+            "cwd": "${workspaceFolder}/content-canvas-app/",
+            "name": "yarn build",
+            "request": "launch",
+            "type": "node-terminal"
+        },
 
         {
             "type": "node",

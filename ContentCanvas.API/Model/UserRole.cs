@@ -12,6 +12,8 @@ namespace ContentCanvas.API.Model
         public string RoleIdObject { get; set; }
         public UserRole()
         {
+            UserIdObject = string.Empty;
+            RoleIdObject = string.Empty;
             WindowsIdentity identity = WindowsIdentity.GetCurrent();
 
             if (identity != null)

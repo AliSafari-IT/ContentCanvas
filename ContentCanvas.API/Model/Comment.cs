@@ -9,5 +9,10 @@ namespace ContentCanvas.API.Model
 
         [BsonElement("authorId")]
         public string AuthorId { get; set; }
+        public Comment()
+        {
+            Content = string.Empty;
+            AuthorId = string.Empty;
+        }
     }
 }

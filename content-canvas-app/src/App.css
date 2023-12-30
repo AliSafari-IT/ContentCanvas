@@ -17,7 +17,7 @@
   background-color: #4070d1;
   display: flex;
   flex-direction: column;
-  align-items: first baseline baseline;
+  align-items: baseline;
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
@@ -35,4 +35,37 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Additional CSS classes for table styling */
+.theadDark {
+  background-color: #333; /* Dark background for table header */
+  color: white;
+}
+
+.tbodyLight {
+  background-color: #f8f8f8; /* Light background for table body */
+}
+
+.tbodyLight tr:hover {
+  background-color: #e0e0e0; /* Slightly darker background on hover */
+}
+
+.hoverLightGray {
+  cursor: pointer;
+}
+
+/* Table enhancements */
+table {
+  border-collapse: collapse; /* Collapses the border */
+  width: 100%; /* Full width tables */
+}
+
+table, th, td {
+  border: 1px solid #ddd; /* Adds border to table, th, and td */
+}
+
+th, td {
+  text-align: left; /* Aligns text to the left */
+  padding: 8px; /* Adds padding */
 }
