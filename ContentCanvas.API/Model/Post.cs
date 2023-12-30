@@ -1,27 +1,36 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 
 namespace ContentCanvas.API.Model
 {
-    public class Post
+    public class Post : BaseModel
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public string IdObject { get; set; }
-
+        [BsonElement("title")]
         public string Title { get; set; }
 
+        [BsonElement("content")]
         public string? Content { get; set; }
 
+        [BsonElement("isPublic")]
         public bool IsPublic { get; set; }
 
-        public string UserId { get; set; }
+        [BsonElement("isPublished")]
+        public bool IsPublished { get; set; }
+
+        [BsonElement("publishedOn")]
+        public DateTime? PublishedOn { get; set; }
+
+        [BsonElement("publishedBy")]
+        public string PublishedBy { get; set; }
+
+        [BsonElement("comments")]
+        public List<Comment> Comments { get; set; }
 
         public Post()
         {
-            IdObject = Guid.NewGuid().ToString();
+            Comments = new List<Comment>();
         }
     }
 }

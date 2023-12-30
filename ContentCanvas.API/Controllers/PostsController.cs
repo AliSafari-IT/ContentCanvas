@@ -10,10 +10,15 @@ namespace ContentCanvas.API.Controllers
     [Route("[controller]")]
 
 
-    public class PostsController(MongoDbContext context) : Controller
+    public class PostsController: ControllerBase
     {
-        private readonly MongoDbContext _context = context;
+        private readonly MongoDbContext _context;
 
+        // Constructor should be defined properly
+        public PostsController(MongoDbContext context)
+        {
+            _context = context;
+        }
         // GET: api/Posts
         [HttpGet]
         public ActionResult<IEnumerable<Post>> GetPosts()

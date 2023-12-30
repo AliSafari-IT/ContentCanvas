@@ -2,28 +2,35 @@
 using ContentCanvas.API.Model;
 using Microsoft.AspNetCore.Mvc;
 using MongoDB.Driver;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ContentCanvas.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UsersController(MongoDbContext context) : Controller
+    public class UsersController : ControllerBase // Inherit from ControllerBase for API controllers
     {
-        private readonly MongoDbContext _context = context;
+        private readonly MongoDbContext _context;
+
+        // Constructor should be defined properly
+        public UsersController(MongoDbContext context)
+        {
+            _context = context;
+        }
 
         // GET: api/Users
         [HttpGet]
         public async Task<ActionResult<List<User>>> GetUsers()
         {
-            return await _context.Users.Find(_ => true).ToListAsync();
+            return await _context.Users.Find(u => u.IdObject != null).ToListAsync();
         }
-
 
         // GET: api/Users/5
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(string id)
         {
-            var user = await _context.Users.Find(user => user.IdObject == id).FirstOrDefaultAsync();
+            var user = await _context.Users.Find(u => u.IdObject == id).FirstOrDefaultAsync();
 
             if (user == null)
             {
@@ -46,7 +53,6 @@ namespace ContentCanvas.API.Controllers
             return CreatedAtAction(nameof(GetUser), new { id = user.IdObject }, user);
         }
 
-
         // PUT: api/Users/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(string id, User user)
@@ -66,12 +72,11 @@ namespace ContentCanvas.API.Controllers
             return NoContent();
         }
 
-
         // DELETE: api/Users/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(string id)
         {
-            var result = await _context.Users.DeleteOneAsync(user => user.IdObject == id);
+            var result = await _context.Users.DeleteOneAsync(u => u.IdObject == id);
 
             if (result.DeletedCount == 0)
             {
