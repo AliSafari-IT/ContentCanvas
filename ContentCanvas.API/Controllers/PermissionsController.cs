@@ -51,5 +51,39 @@ namespace ContentCanvas.API.Controllers
 
             return permission;
         }
+
+        // PUT: api/Permissions/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutPermission(string id, Permission permission)
+        {
+            if (id != permission.Id)
+            {
+                return BadRequest();
+            }
+
+            var result = await _context.Permissions.ReplaceOneAsync(p => p.Id == id, permission);
+
+            if (result.MatchedCount == 0)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        // DELETE: api/Permissions/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeletePermission(string id)
+        {
+            var result = await _context.Permissions.DeleteOneAsync(p => p.Id == id);
+
+            if (result.DeletedCount == 0)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
     }
 }

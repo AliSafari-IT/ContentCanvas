@@ -69,3 +69,121 @@ th, td {
   text-align: left; /* Aligns text to the left */
   padding: 8px; /* Adds padding */
 }
+
+/* Modal */
+.modal {
+  display: block;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 400px;
+}
+
+/* Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Confirm Button */
+.confirm-button {
+  background-color: green;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.confirm-button:hover {
+  background-color: darkgreen;
+}
+
+/* Cancel Button */
+.cancel-button {
+  background-color: red;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.cancel-button:hover {
+  background-color: darkred;
+}
+
+.add-button {
+  background-color: green;
+  color: white;
+}
+
+.update-button {
+  background-color: blue;
+  color: white;
+}
+
+.new-permission-form .form-group {
+  margin-bottom: 10px;
+}
+
+.new-permission-form .form-label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.new-permission-form .form-input {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.new-permission-form .update-button {
+  background-color: blue;
+  color: white;
+}
+
+.new-permission-form .add-button {
+  background-color: green;
+  color: white;
+}
+
+.permission-list-header {
+  display: flex;
+  align-items: center;
+}
+
+.permission-list-header h2 {
+  margin-right: 20px;
+}
+
+.permission-list-header span {
+  cursor: pointer;
+  margin-right: 10px;
+}

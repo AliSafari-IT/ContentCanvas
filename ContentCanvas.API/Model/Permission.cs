@@ -34,7 +34,7 @@ namespace ContentCanvas.API.Model
             }
             else
             {
-                CreatedBy = "_";
+                CreatedBy = "NonWinAgentUser";
             }
         }
     }
