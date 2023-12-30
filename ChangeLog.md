@@ -7,3 +7,9 @@
 - 4373e32 - Add interface IUserRole, Add UsersPanel component to project Enable CORS for requests from React app in Program. Change UserRole constructor to populate CreatedBy field from Windows Add Windows Identity lookup to Role constructor Add WindowsIdentity to Permission model and set Created Changed CreatedBy property to accept null values outinely running npm start in content-canvas-app [asafarim]
 - c8cf107 - Added Permission model to ContentCanvas. adding Comment class to the ContentCanvas.API Model namespace Add role and permission collections to MongoDB context [asafarim]
 
+# Change Log
+
+## [Recent Changes]
+
+- 2023-12-30 - Updated ChangeLog with recent changes [asafarim]
+
