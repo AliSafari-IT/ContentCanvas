@@ -1,8 +1,5 @@
 # Get the last write time of ChangeLog.md
-$lastModified = (Get-Item -Path README.md).LastWriteTime
-
-# Get the last write time of ChangeLog.md
-#$lastModified = (Get-Item -Path ChangeLog.md).LastWriteTime
+$lastModified = (Get-Item -Path ChangeLog.md).LastWriteTime
 
 # Format the date for git log
 $lastModifiedDate = $lastModified.ToString("yyyy-MM-dd HH:mm:ss")

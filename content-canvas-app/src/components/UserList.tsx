@@ -10,39 +10,37 @@ const UserList: React.FC = () => {
    useEffect(() => {
        const fetchData = async () => {
            try {
-               const allResponses = await Promise.all([
+               const allResponses = await Promise.allSettled([
                    fetch('http://localhost:56596/api/Users'),
                    fetch('http://localhost:56596/api/Roles'),
                    fetch('http://localhost:56596/api/UserRoles')
                ]);
    
                const [usersResponse, rolesResponse, userRolesResponse] = allResponses;
-               console.log({ allResponses });
-               if (!usersResponse.ok || !rolesResponse.ok || !userRolesResponse.ok) {
-                   console.log('http error while fetching data');
+   
+               if (usersResponse.status === 'fulfilled' && rolesResponse.status === 'fulfilled' && userRolesResponse.status === 'fulfilled') {
+                   const usersData = await usersResponse.value.json() as IUser[];
+                   const rolesData = await rolesResponse.value.json() as IRole[];
+                   const userRolesData = await userRolesResponse.value.json() as IUserRole[];
+   
+                   const roleIdToName = rolesData.reduce((acc, role) => {
+                       acc[role.idObject] = role.name;
+                       return acc;
+                   }, {} as { [key: string]: string });
+   
+                   const updatedUsersData = usersData.map(user => ({
+                       ...user,
+                       roleNames: userRolesData
+                           .filter(ur => ur.userIdObject === user.idObject)
+                           .map(ur => roleIdToName[ur.roleIdObject])
+                           .filter(name => name)
+                   }));
+   
+                   setUsers(updatedUsersData); 
+               } else {
+                   console.log('HTTP error while fetching data');
                    throw new Error('HTTP error while fetching data');
                }
-   
-               const usersData = await usersResponse.json() as IUser[];
-               const rolesData = await rolesResponse.json() as IRole[];
-               const userRolesData = await userRolesResponse.json() as IUserRole[];
-               console.log({ usersData, rolesData, userRolesData });
-   
-               // Map role IDs to role names
-               const roleIdToName = rolesData.reduce((acc, role) => {
-                   acc[role.idObject] = role.name;
-                   return acc;
-               }, {} as { [key: string]: string });
-   
-               // Map user roles to users
-               usersData.forEach(user => {
-                   user.roleNames = userRolesData
-                       .filter(ur => ur.userIdObject === user.idObject)
-                       .map(ur => roleIdToName[ur.roleIdObject])
-                       .filter(name => name); // Filter out any undefined names
-               });
-   
-               setUsers(usersData);
            } catch (error) {
                console.error('Error fetching data:', error);
            } finally {
