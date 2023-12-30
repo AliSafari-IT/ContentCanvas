@@ -27,6 +27,15 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<MongoDbContext>(sp =>
     new MongoDbContext(sp.GetRequiredService<IConfiguration>()));
 
+// Configure CORS to allow requests from your React app
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowSpecificOrigin",
+        builder => builder.WithOrigins("http://localhost:3000") // Replace with your React app's URL
+                            .AllowAnyHeader()
+                            .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline
@@ -35,6 +44,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Use the CORS policy
+app.UseCors("AllowSpecificOrigin");
 
 app.UseAuthorization();
 

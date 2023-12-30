@@ -20,7 +20,7 @@ namespace ContentCanvas.API.Model
         public DateTime CreatedOn { get; set; }
 
         [BsonElement("createdBy")]
-        public string CreatedBy { get; set; }
+        public string? CreatedBy { get; set; }
 
         [BsonElement("modifiedOn")]
         public DateTime? ModifiedOn { get; set; }

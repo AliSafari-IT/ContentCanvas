@@ -61,7 +61,10 @@
         },
         {
             "label": "Run Both",
-            "dependsOn": ["Update and Run API", "Update and Run React App"],
+            "dependsOn": [
+                "Update and Run API",
+                "Update and Run React App"
+            ],
             "dependsOrder": "parallel"
         },
         {
@@ -86,8 +89,19 @@
         },
         {
             "label": "Run Both and Open Chrome",
-            "dependsOn": ["Run Both", "Open Chrome"],
+            "dependsOn": [
+                "Run Both",
+                "Open Chrome"
+            ],
             "dependsOrder": "parallel"
+        },
+        {
+            "type": "npm",
+            "script": "start",
+            "path": "content-canvas-app",
+            "problemMatcher": [],
+            "label": "npm: start - content-canvas-app",
+            "detail": "react-scripts start"
         }
     ]
 }
