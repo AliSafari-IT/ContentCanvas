@@ -29,8 +29,9 @@ const UserList: React.FC = () => {
                         return acc;
                     }, {} as { [key: string]: string });
 
-                    const updatedUsersData = usersData.map(user => ({
+                    const updatedUsersData = usersData.map((user, index) => ({
                         ...user,
+                        index: index + 1,
                         roleNames: userRolesData
                             .filter(ur => ur.userIdObject === user.idObject)
                             .map(ur => roleIdToName[ur.roleIdObject])
@@ -66,6 +67,10 @@ const UserList: React.FC = () => {
             }
 
             switch (columnIndex) {
+                case 0:  // For Index column
+                valueA = a.index;
+                valueB = b.index;
+                break;
                 case 1: // First Name
                     valueA = a.firstName;
                     valueB = b.firstName;
@@ -87,8 +92,6 @@ const UserList: React.FC = () => {
                     valueA = new Date(a.createdOn);
                     valueB = new Date(b.createdOn);
                     break;
-                default:
-                    return 0;
             }
 
             // For string comparison
@@ -96,6 +99,9 @@ const UserList: React.FC = () => {
                 return direction === 'asc' ? valueA.localeCompare(valueB) : valueB.localeCompare(valueA);
             }
 
+            if (typeof valueA === 'number' && typeof valueB === 'number') {
+                return direction === 'asc' ? valueA - valueB : valueB - valueA;
+            }
             // For date comparison
             if (columnIndex === 6) { // Assuming 6 is the index for date column
                 const dateA = new Date(a.createdOn);
@@ -135,7 +141,7 @@ const UserList: React.FC = () => {
                 <tbody className='tbodyLight hoverLightGray'>
                     {users.map((user, i) => (
                         <tr key={user.idObject}>
-                            <td>{i + 1}</td>
+                            <td>{user.index}</td>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
                             <td>{user.username}</td>
