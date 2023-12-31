@@ -46,31 +46,6 @@ const PermissionList: React.FC = () => {
     }
   }, [isAddingAction]);
 
-  // const handleAddPermission = async (newPermission: IPermission) => {
-  //   setCurrentPermission(null);
-  //   try {
-  //     const response = await fetch('http://localhost:56596/api/Permissions', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //       },
-  //       body: JSON.stringify(newPermission),
-  //     });
-  //     const createdPermission = await response.json();
-  //     setPermissions([...permissions, createdPermission]);
-  //     setShowModal(false);
-  //   } catch (error) {
-  //     console.error('Error adding permission:', error);
-  //   }
-  // };
-
-  const handleAddNewPermission = async () => {
-    setCurrentPermission(null);
-    setIsEditingAction(false);
-    setIsAddingAction(true);
-    openModal();
-  };
-
   const handleDeletePermission = async (permission: IPermission) => {
     if (window.confirm('Are you sure you want to delete this permission?')) {
       try {
@@ -107,7 +82,13 @@ const PermissionList: React.FC = () => {
     setPermissionToDelete(null);
   };
 
-  const openModal = () => {
+  const openModal = (actionType?: string) => {
+    if (actionType === 'edit') {
+      setIsEditingAction(true);
+    }
+    if (actionType === 'add') {
+      setIsAddingAction(true);
+    }
     setCurrentPermission(null); // Reset current permission for new additions
     setShowModal(true);
   };
@@ -122,14 +103,16 @@ const PermissionList: React.FC = () => {
   };
 
   const handleFormSubmit = async (obj: IPermission) => {
+    const jsonObj = JSON.stringify(obj);
+    console.log('handleFormSubmit obj: IPermission', obj);
     const method = currentPermission ? 'PUT' : 'POST';
     const url = currentPermission ? `${endpoint}/${obj.id}` : endpoint;
-
+ 
     try {
       const response = await fetch(url, {
         method: method,
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(obj),
+        body: jsonObj,
       });
 
       if (!response.ok) {
@@ -152,11 +135,11 @@ const PermissionList: React.FC = () => {
         <span
           role="img"
           aria-label="add"
-          onClick={openModal}
+          onClick={() => openModal('add')}
           style={{ cursor: 'pointer', marginRight: '10px' }}
           title='Add new permission'
         >
-          ➕
+          ➕ Add
         </span>
       </div>
       {showModal && (
