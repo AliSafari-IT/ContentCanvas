@@ -21,13 +21,13 @@
     "CC": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "http://localhost:3000",
+      "launchUrl": "http://localhost:3000", // Change this if you want a different startup page
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "iisExpress": {
-        "applicationUrl": "http://localhost:56596",
-        "sslPort": 0
+        "applicationUrl": "http://localhost:56596", // Change this to the desired application URL
+        "sslPort": 44300 // Set this to a valid SSL port if you're using HTTPS
       }
     }
   },
@@ -36,8 +36,8 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:56596",
-      "sslPort": 0
+      "applicationUrl": "http://localhost:56596", // Ensure this matches the URL in the CC profile if needed
+      "sslPort": 0 // Or set to the same SSL port as in the CC profile
     }
   }
 }
