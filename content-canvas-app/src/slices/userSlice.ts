@@ -1,9 +1,13 @@
 // src/features/userSlice.ts
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../interfaces/iUser';
+import { IRole } from '../interfaces/iRole';
+import { IUserRole } from '../interfaces/iUserRole';
 
 interface UserState {
     users: IUser[];
+    roles: IRole[];
+    userRoles: IUserRole[];
     loading: boolean;
     sort: {
         columnIndex: number | null;
@@ -18,6 +22,8 @@ const initialState: UserState = {
         columnIndex: null,
         direction: null,
     },
+    userRoles: [],
+    roles: [],
 };
 export const fetchUsers = createAsyncThunk<IUser[]>(
     'user/fetchUsers',
@@ -28,7 +34,22 @@ export const fetchUsers = createAsyncThunk<IUser[]>(
     }
   );
   
+  export const fetchRoles = createAsyncThunk<IRole[]>(
+    'user/fetchRoles',
+    async () => {
+      const response = await fetch('http://localhost:56596/api/Roles');
+      const roles = await response.json();
+      return roles as IRole[];
+    }
+);
 
+export const fetchUserRoles = createAsyncThunk<IUserRole[]>(
+    'user/fetchUserRoles',
+    async () => {
+        const response = await fetch('http://localhost:56596/api/UserRoles');
+        const userroles = await response.json();
+        return userroles as IUserRole[];    }
+);
 
 export const userSlice = createSlice({
     name: 'user',
@@ -57,6 +78,11 @@ export const userSlice = createSlice({
                     index: index + 1
                 }));
                 state.loading = false;
+            }).addCase(fetchRoles.fulfilled, (state, action) => {
+                state.roles = action.payload;
+            })
+            .addCase(fetchUserRoles.fulfilled, (state, action) => {
+                state.userRoles = action.payload;
             });
     },
 });

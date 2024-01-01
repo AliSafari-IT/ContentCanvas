@@ -2,19 +2,38 @@ import React, { useEffect } from 'react';
 import SortableColumnHeader from '../utilityComponents/SortableColumnHeader ';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store';
-import { fetchUsers, sortUsers } from '../slices/userSlice';
+import { fetchRoles, fetchUserRoles, fetchUsers, sortUsers } from '../slices/userSlice';
 
 const UserList: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { users, loading } = useSelector((state: RootState) => state.user);
+    const { users, roles, userRoles, loading } = useSelector((state: RootState) => state.user);
+
+     // Process to map roles to users
+     const usersWithRoles = users.map(user => ({
+        ...user,
+        roleNames: userRoles
+            .filter(ur => ur.userIdObject === user.idObject) // Match userRoles with the user
+            .map(ur => {
+                const role = roles.find(role => role.idObject === ur.roleIdObject);
+                return role ? role.name : null;
+            })
+            .filter(name => name) // Filter out any nulls (in case a role wasn't found)
+    }));
+
     const handleSort = (columnIndex: number, direction: 'asc' | 'desc') => {
         dispatch(sortUsers({ columnIndex, direction }));
     };
 
-    useEffect(() => {
-        dispatch(fetchUsers());
-        // Dispatch fetchRoles and fetchUserRoles as well
-    }, [dispatch]);
+useEffect(() => {
+    dispatch(fetchUsers());
+    dispatch(fetchRoles());
+    dispatch(fetchUserRoles());
+    // After dispatches, log the usersWithRoles to verify
+}, [dispatch]);
+
+// After the map
+console.log("Users with roles:", usersWithRoles);
+
 
     if (loading) return <p>Loading users...</p>;
 
@@ -34,7 +53,7 @@ const UserList: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody className='tbodyLight hoverLightGray'>
-                    {users.map((user) => (
+                    {usersWithRoles.map((user) => (
                         <tr key={user.idObject}>
                             <td>{user.index}</td>
                             <td>{user.firstName}</td>
