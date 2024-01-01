@@ -44,3 +44,13 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Technologies used
+
+### Integrating Redux into our React TypeScript app with an ASP.NET Core backend
+
+### Using Redux Toolkit to simplify the Redux setup
+
+Redux Toolkit simplifies many aspects of using Redux and is the recommended approach for writing Redux logic.
+
+### Adding Redux Thunk for asynchronous actions
