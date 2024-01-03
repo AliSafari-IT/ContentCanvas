@@ -1,4 +1,5 @@
 # ContentCanvas
+Goal: To learn a fullstack with React TypeScript for the frontend and ASP.NET Core for the backend.
 
 ## Overview
 
