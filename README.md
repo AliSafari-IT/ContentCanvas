@@ -1,6 +1,12 @@
 # ContentCanvas
 Goal: To learn a fullstack with React TypeScript for the frontend and ASP.NET Core for the backend.
 
+## Tech Stack
+
+- **Frontend**: React TypeScript
+- **Backend**: ASP.NET Core Web API
+- **Database**: NoSQL (e.g., MongoDB)
+
 ## Overview
 
 ContentCanvas is a full-stack web application designed as a creative space for digital expression. It's an ideal platform for blogging or HTML content posting, allowing users to articulate and share their ideas like an artist on a canvas. Built with React TypeScript for the frontend and ASP.NET Core for the backend, it integrates user authentication, role-based access control, and uses a NoSQL database for efficient data management.
@@ -12,12 +18,6 @@ ContentCanvas is a full-stack web application designed as a creative space for d
 - Admins can confirm user accounts and assign roles
 - Users can create, edit, and view public and private blog posts
 - Moderators and admins have enhanced content management capabilities
-
-## Tech Stack
-
-- **Frontend**: React TypeScript
-- **Backend**: ASP.NET Core Web API
-- **Database**: NoSQL (e.g., MongoDB)
 
 ## Getting Started
 
